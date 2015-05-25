@@ -12,3 +12,4 @@ src/com/socket/
 bin/
 quote
 data/
+!src/clientFiles/TwitchBot.java
