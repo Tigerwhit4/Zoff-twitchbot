@@ -1,0 +1,14 @@
+src/clientFX/
+src/net/
+src/serverFiles/
+src/test/
+src/TopKek/
+src/ChatFrame.java
+src/chatr.png
+src/SocketClient.java
+src/clientFiles/
+!src/clientFiles/TwitchBot.java
+src/com/socket/
+bin/
+quote
+data/
