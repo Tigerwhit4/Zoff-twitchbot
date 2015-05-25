@@ -9,4 +9,6 @@ To add a song, simply type in your channel ```!request [YOUTUBE_VIDEO_ID]``` (wi
 
 (its not possible to get the bot to join any other channels than the one your username is for now. It will be updated soon)
 
+(the code is messy and shitty because I "rewrote" an old bot from when we started Java at NTNU. This will also be cleaned up a bit in the future)
+
 Thanks to nkzawa for the great Socket.io java library.
