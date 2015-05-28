@@ -43,6 +43,7 @@ public class TwitchBot
 	private Runnable readerFunction;
 	private List<String> isAllowed = new ArrayList<String>();
 	private Map<String, List<String>> mods = new HashMap<String, List<String>>();
+	private HashMap<String, String> channels = new HashMap<String, String>();
 	
 	public TwitchBot(Socket socket) throws IOException
 	{
@@ -261,26 +262,23 @@ public class TwitchBot
 		writer.flush();
 	}
 	
-	private void botCommand(String msg, String sender, String channel)
+	private void botCommand(String msg, String sender, String channel) throws IOException
 	{
 		switch(msg)
 		{
 			case "!time": 
-				send(getTime());
+				noFormatSend("PRIVMSG "+ channel + " :"+getTime());
 				break;
 			case "!creator":
-				send("Kasper Rynning-Tønnesen, http://www.kasperrt.no");
+				noFormatSend("PRIVMSG "+ channel + " :Kasper Rynning-Tønnesen, http://www.kasperrt.no");
 				break;
 			case "!join":
-				try
-				{
-					System.out.println("Joining " + sender + "'s channel");
-					noFormatSend("JOIN #"+sender);
-				} catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				System.out.println("Joining " + sender + "'s channel");
+				noFormatSend("JOIN #"+sender);
+				channels.put(sender, sender);
+				break;
+			case "!help":
+				noFormatSend("PRIVMSG "+ channel + " :To request a song, type '!request YOUTUBE_ID'. It's just that easy!");
 				break;
 			/*case "!quit":
 				if(sender.toLowerCase().equals("kasperrt"))
@@ -308,6 +306,13 @@ public class TwitchBot
 						System.out.println("Allowing " + msg.substring(7) + " to send a link");
 						isAllowed.add(msg.substring(7));
 					}
+				}else if(msg.startsWith("!join "))
+				{
+					String zoffchannel = msg.split(" ")[1];
+					
+					channels.put(sender, zoffchannel);
+					System.out.println("Joining " + sender + "'s channel");
+					noFormatSend("JOIN #"+sender);
 				}else if(msg.startsWith("!request "))
 						
 				{
@@ -315,7 +320,7 @@ public class TwitchBot
 					channel = channel.substring(0, channel.length()-1);
 					
 					final com.github.nkzawa.socketio.client.Socket socket;
-					final String chan = channel;
+					final String chan = channels.get(channel);
 					final String song_id = msg.split(" ")[1];
 					final String youtube_get = "https://www.googleapis.com/youtube/v3/videos?id="+song_id+"&part=contentDetails,snippet,id&key=AIzaSyDvMlC0Kvk76-WO9UrtBaaEYyUw4z-TGqE";
 
@@ -370,24 +375,6 @@ public class TwitchBot
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					/*URL url;
-					try
-					{
-						url = new URL("http://r.nixo.no/zoff/add.php?v="+msg.substring(9));
-					
-						BufferedReader reader = null;
-		
-						try {
-						    reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-						} finally {
-						    if (reader != null) try { reader.close(); } catch (IOException ignore) {}
-						}
-					} catch (Exception e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 				}
 				break;
 		}
