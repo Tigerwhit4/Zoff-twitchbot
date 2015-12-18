@@ -41,7 +41,7 @@ public class TwitchBot
 		this.writer = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
 		this.reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		
-		writer.write("PASS oauth:tpjk2j1f5e86yy9q5sn5g5ma7kjf0w\r\n");
+		writer.write("PASS \r\n");
 		writer.write("NICK " + sender + "\r\n");
 		writer.flush();
 		
@@ -144,14 +144,14 @@ public class TwitchBot
 				noFormatSend("PRIVMSG "+ channel + " :"+getTime());
 				break;
 			case "!creator":
-				noFormatSend("PRIVMSG "+ channel + " :Kasper Rynning-Tønnesen, http://www.kasperrt.no");
+				noFormatSend("PRIVMSG "+ channel + " :Kasper Rynning-TÃ¸nnesen, http://www.kasperrt.no");
 				break;
 			case "!join":
 				System.out.println("Joining " + sender + "'s channel");
 				join(sender, sender);
 				break;
 			case "!help":
-				if(channel.equals("#zoffbot ")) noFormatSend("PRIVMSG " + channel + " :To make me join your channel, type '!join' or '!join [ZOFF_CHANNELNAME]', depending on what Zöff-channel you want me to join.");
+				if(channel.equals("#zoffbot ")) noFormatSend("PRIVMSG " + channel + " :To make me join your channel, type '!join' or '!join [ZOFF_CHANNELNAME]', depending on what ZÃ¶ff-channel you want me to join.");
 				else noFormatSend("PRIVMSG "+ channel + " :To request a song, type '!request YOUTUBE_ID'. It's just that easy!");
 				break;
 			default:
